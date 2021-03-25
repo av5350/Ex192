@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Ex192</string>
+
+    <string-array name="VaccineOptions">
+        <item>"Vaccine Options"</item>
+        <item>"First Vaccine"</item>
+        <item>"Second Vaccine"</item>
+        <item>"Can't get Vaccinated"</item>
+    </string-array>
+</resources>
