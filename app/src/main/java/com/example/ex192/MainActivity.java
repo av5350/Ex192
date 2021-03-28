@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                     StudentInfo student = new StudentInfo(firstNameStr, lastNameStr, Integer.parseInt(stratumStr), Integer.parseInt(classStr), new VaccineInfo(placeStr, dateStr), null);
                                     String childName = String.format("%02d", Integer.parseInt(stratumStr)) + String.format("%02d", Integer.parseInt(classStr)) + "1" + "_" + firstNameStr + "_" + lastNameStr;
                                     refRoot.child(childName).setValue(student);
+                                    Toast.makeText(MainActivity.this, "The Student was added!", Toast.LENGTH_SHORT).show();
                                 }
                                 else {
                                     String childName = String.format("%02d", Integer.parseInt(stratumStr)) + String.format("%02d", Integer.parseInt(classStr)) + "1" + "_" + firstNameStr + "_" + lastNameStr;
@@ -154,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                                     {
                                                         student.setSecondVaccine(new VaccineInfo(placeStr, dateStr));
                                                         refRoot.child(childName).setValue(student);
+                                                        Toast.makeText(MainActivity.this, "The sec vaccine was added to the student!", Toast.LENGTH_SHORT).show();
                                                     }
                                                     else
                                                     {
@@ -211,6 +213,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 String childName = String.format("%02d", Integer.parseInt(stratumStr)) + String.format("%02d", Integer.parseInt(classStr)) + "0" + "_" + firstNameStr + "_" + lastNameStr;
                 StudentInfo student = new StudentInfo(firstNameStr, lastNameStr, Integer.parseInt(stratumStr), Integer.parseInt(classStr), null, null);
                 refRoot.child(childName).setValue(student);
+                Toast.makeText(MainActivity.this, "The Student was added!", Toast.LENGTH_SHORT).show();
             }
         }
     }

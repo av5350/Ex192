@@ -86,75 +86,82 @@ public class ShowData extends AppCompatActivity implements AdapterView.OnItemCli
     {
         //  if this user can be vaccinated - can to edit his data
         if (infoList.get(place).getFirstVaccine() != null) {
-            adb = new AlertDialog.Builder(this);
-            adb.setCancelable(false);
-            adb.setTitle("Vaccine Information");
+            if ((vaccineNum == 1) || (infoList.get(place).getSecondVaccine() != null && vaccineNum == 2)) { // if have sec vaccine - can edit it!
+                adb = new AlertDialog.Builder(this);
+                adb.setCancelable(false);
+                adb.setTitle("Vaccine Information");
 
-            LinearLayout layout = new LinearLayout(this);
-            layout.setOrientation(LinearLayout.VERTICAL);
+                LinearLayout layout = new LinearLayout(this);
+                layout.setOrientation(LinearLayout.VERTICAL);
 
-            final EditText placeInput = new EditText(this);
-            placeInput.setHint("Vaccine place");
+                final EditText placeInput = new EditText(this);
+                placeInput.setHint("Vaccine place");
 
-            if (vaccineNum == 1) {
-                placeInput.setText(infoList.get(place).getFirstVaccine().getPlace());
-            } else {
-                placeInput.setText(infoList.get(place).getSecondVaccine().getPlace());
-            }
+                if (vaccineNum == 1) {
+                    placeInput.setText(infoList.get(place).getFirstVaccine().getPlace());
+                } else {
+                    placeInput.setText(infoList.get(place).getSecondVaccine().getPlace());
+                }
 
-            final EditText dateInput = new EditText(this);
-            dateInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
-            dateInput.setHint("Vaccine date");
+                final EditText dateInput = new EditText(this);
+                dateInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+                dateInput.setHint("Vaccine date");
 
-            if (vaccineNum == 1) {
-                dateInput.setText(infoList.get(place).getFirstVaccine().getDate());
-            } else {
-                dateInput.setText(infoList.get(place).getSecondVaccine().getDate());
-            }
+                if (vaccineNum == 1) {
+                    dateInput.setText(infoList.get(place).getFirstVaccine().getDate());
+                } else {
+                    dateInput.setText(infoList.get(place).getSecondVaccine().getDate());
+                }
 
-            layout.addView(placeInput);
-            layout.addView(dateInput);
-            adb.setView(layout);
+                layout.addView(placeInput);
+                layout.addView(dateInput);
+                adb.setView(layout);
 
-            adb.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }}
-            );
-
-            adb.setPositiveButton("Done", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // check the input
-                            String placeStr = placeInput.getText().toString();
-                            String dateStr = dateInput.getText().toString();
-
-                            if (placeStr.equals("") || dateStr.equals("")) {
-                                Toast.makeText(ShowData.this, "There is a missing value!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                if (!checkAlphabetic(placeStr)) {
-                                    Toast.makeText(ShowData.this, "PLACE name must contains only letters!", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    StudentInfo newInfo = infoList.get(place);
-
-                                    // all good
-                                    if (vaccineNum == 1) // if first vaccine
-                                    {
-                                        newInfo.setFirstVaccine(new VaccineInfo(placeStr, dateStr));
-                                    } else {
-                                        newInfo.setSecondVaccine(new VaccineInfo(placeStr, dateStr));
-                                    }
-                                    infoList.set(place, newInfo);
-                                    refRoot.child(keysList.get(place)).setValue(newInfo);
-                                    adp.notifyDataSetChanged();
-                                }
+                adb.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
                             }
                         }
-            });
+                );
 
-            AlertDialog ad = adb.create();
-            ad.show();
+                adb.setPositiveButton("Done", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // check the input
+                        String placeStr = placeInput.getText().toString();
+                        String dateStr = dateInput.getText().toString();
+
+                        if (placeStr.equals("") || dateStr.equals("")) {
+                            Toast.makeText(ShowData.this, "There is a missing value!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            if (!checkAlphabetic(placeStr)) {
+                                Toast.makeText(ShowData.this, "PLACE name must contains only letters!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                StudentInfo newInfo = infoList.get(place);
+
+                                // all good
+                                if (vaccineNum == 1) // if first vaccine
+                                {
+                                    newInfo.setFirstVaccine(new VaccineInfo(placeStr, dateStr));
+                                } else {
+                                    newInfo.setSecondVaccine(new VaccineInfo(placeStr, dateStr));
+                                }
+                                infoList.set(place, newInfo);
+                                refRoot.child(keysList.get(place)).setValue(newInfo);
+                                adp.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+
+                AlertDialog ad = adb.create();
+                ad.show();
+            }
+            else
+            {
+                Toast.makeText(this, "The User wasnt vaccinated the second vaccine!", Toast.LENGTH_SHORT).show();
+            }
         }
         else
         {
@@ -173,8 +180,6 @@ public class ShowData extends AppCompatActivity implements AdapterView.OnItemCli
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "Edit sec vaccine...", Toast.LENGTH_SHORT).show();
-
         vaccineEdit(position, 2);
     }
 
@@ -190,8 +195,6 @@ public class ShowData extends AppCompatActivity implements AdapterView.OnItemCli
      */
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "Edit first vaccine...", Toast.LENGTH_SHORT).show();
-
         vaccineEdit(position, 1);
 
         return true;
@@ -221,10 +224,10 @@ public class ShowData extends AppCompatActivity implements AdapterView.OnItemCli
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        // go to edit Vaccines activity if clicked
-        if (id == R.id.editVaccines)
+        // go to filter data activity if clicked
+        if (id == R.id.filterData)
         {
-            Intent si = new Intent(this, ShowData.class);
+            Intent si = new Intent(this, FilterData.class);
             startActivity(si);
         }
         else if (id == R.id.addStudent)
