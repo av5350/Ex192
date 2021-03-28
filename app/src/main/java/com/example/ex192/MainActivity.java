@@ -131,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 {
                                     StudentInfo student = new StudentInfo(firstNameStr, lastNameStr, Integer.parseInt(stratumStr), Integer.parseInt(classStr), new VaccineInfo(placeStr, dateStr), null);
                                     String childName = String.format("%02d", Integer.parseInt(stratumStr)) + String.format("%02d", Integer.parseInt(classStr)) + "1" + "_" + firstNameStr + "_" + lastNameStr;
-                                    Toast.makeText(MainActivity.this, childName, Toast.LENGTH_SHORT).show();
                                     refRoot.child(childName).setValue(student);
                                 }
                                 else {
@@ -210,7 +209,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             else // if everything is good
             {
                 String childName = String.format("%02d", Integer.parseInt(stratumStr)) + String.format("%02d", Integer.parseInt(classStr)) + "0" + "_" + firstNameStr + "_" + lastNameStr;
-                Toast.makeText(MainActivity.this, childName, Toast.LENGTH_SHORT).show();
                 StudentInfo student = new StudentInfo(firstNameStr, lastNameStr, Integer.parseInt(stratumStr), Integer.parseInt(classStr), null, null);
                 refRoot.child(childName).setValue(student);
             }
