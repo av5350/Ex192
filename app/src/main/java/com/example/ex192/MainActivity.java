@@ -17,16 +17,22 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.example.ex192.FBref.FBDB;
 import static com.example.ex192.FBref.refRoot;
 
+/**
+ * The type main activity.
+ * @author Itey Weintraub <av5350@bs.amalnet.k12.il>
+ * @version	1
+ * @since 28.3.2021
+ * short description:
+ *
+ *      This activity gets the info about student and his vaccines
+ */
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Spinner vaccineTypes;
     EditText firstName;
@@ -62,6 +68,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         vaccineTypes.setAdapter(vaccineTypesAdp);
     }
 
+    /**
+     * Gets data for the student and pop up for fill his vaccine information.
+     *
+     * @param view the view
+     */
     public void getData(View view) {
         String firstNameStr = firstName.getText().toString();
         String lastNameStr = lastName.getText().toString();
@@ -115,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 Toast.makeText(MainActivity.this, "PLACE name must contains only letters!", Toast.LENGTH_SHORT).show();
                             }
                             else {
-                                // all good TODO
+                                // all good
                                 if (vaccineNum == 1) // if first vaccine
                                 {
                                     StudentInfo student = new StudentInfo(firstNameStr, lastNameStr, Integer.parseInt(stratumStr), Integer.parseInt(classStr), new VaccineInfo(placeStr, dateStr), null);
@@ -125,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 }
                                 else {
                                     String childName = String.format("%02d", Integer.parseInt(stratumStr)) + String.format("%02d", Integer.parseInt(classStr)) + "1" + "_" + firstNameStr + "_" + lastNameStr;
-                                    // need todo a edit command....!!!! (with the sec vaccine)
+                                    // do a edit command (with the sec vaccine)
 
                                     refRoot.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
@@ -175,6 +186,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
 
+    /**
+     * Submit data for a student that cannot been vaccinated.
+     *
+     * @param view the view
+     */
     public void submitData(View view) {
         String firstNameStr = firstName.getText().toString();
         String lastNameStr = lastName.getText().toString();
@@ -281,18 +297,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        // go to add students activity if clicked
+        // go to edit Vaccines activity if clicked
         if (id == R.id.editVaccines)
         {
             Intent si = new Intent(this, ShowData.class);
+            startActivity(si);
+        }
+        else if (id == R.id.filterData)
+        {
+            Intent si = new Intent(this, FilterData.class);
+            startActivity(si);
+        }
+        else if (id == R.id.appCredits)
+        {
+            Intent si = new Intent(this, CreditsActivity.class);
             startActivity(si);
         }
 
         return true;
     }
 }
-
-/*
-        StudentInfo student = new StudentInfo("itay", "w", 11, 5, new VaccineInfo("PLACE", "DATE"), null);
-        refRoot.child("K51_itay_W").setValue(student);
-*/

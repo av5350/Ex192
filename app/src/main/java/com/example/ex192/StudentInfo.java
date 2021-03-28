@@ -1,5 +1,14 @@
 package com.example.ex192;
 
+/**
+ * The type student info class
+ * @author Itey Weintraub <av5350@bs.amalnet.k12.il>
+ * @version	1
+ * @since 28.3.2021
+ * short description:
+ *
+ *      This class represent a student (that can/not get the vaccine)
+ */
 public class StudentInfo {
     private String firstName;
     private String lastName;
@@ -8,6 +17,9 @@ public class StudentInfo {
     private VaccineInfo firstVaccine; // if this is null - cant get Vaccine!
     private VaccineInfo secondVaccine;
 
+    /**
+     * Instantiates a new Student info.
+     */
     public StudentInfo(){}
 
     public StudentInfo(String firstName, String lastName, int stratum, int studClass, VaccineInfo firstVaccine, VaccineInfo secondVaccine)
@@ -20,6 +32,11 @@ public class StudentInfo {
         this.secondVaccine = secondVaccine;
     }
 
+    /**
+     * Instantiates a new Student info.
+     *
+     * @param anotherStud the another stud
+     */
     public StudentInfo(StudentInfo anotherStud)
     {
         this.firstName = anotherStud.firstName;
@@ -30,56 +47,80 @@ public class StudentInfo {
         this.secondVaccine = anotherStud.secondVaccine;
     }
 
+    /**
+     * Gets first name.
+     *
+     * @return the first name
+     */
     public String getFirstName()
     {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
+    /**
+     * Gets last name.
+     *
+     * @return the last name
+     */
     public String getLastName()
     {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
+    /**
+     * Gets stratum.
+     *
+     * @return the stratum
+     */
     public int getStratum()
     {
         return stratum;
     }
 
-    public void setStratum(int stratum) {
-        this.stratum = stratum;
-    }
-
+    /**
+     * Gets stud class.
+     *
+     * @return the stud class
+     */
     public int getStudClass()
     {
         return studClass;
     }
 
-    public void setStudClass(int studClass) {
-        this.studClass = studClass;
-    }
-
+    /**
+     * Gets first vaccine.
+     *
+     * @return the first vaccine
+     */
     public VaccineInfo getFirstVaccine()
     {
         return firstVaccine;
     }
 
+    /**
+     * Sets first vaccine.
+     *
+     * @param firstVaccine the first vaccine
+     */
     public void setFirstVaccine(VaccineInfo firstVaccine) {
         this.firstVaccine = firstVaccine;
     }
 
+    /**
+     * Gets second vaccine.
+     *
+     * @return the second vaccine
+     */
     public VaccineInfo getSecondVaccine()
     {
         return secondVaccine;
     }
 
+    /**
+     * Sets second vaccine.
+     *
+     * @param secondVaccine the second vaccine
+     */
     public void setSecondVaccine(VaccineInfo secondVaccine) {
         this.secondVaccine = secondVaccine;
     }

@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ex192">
-        <activity android:name=".ShowData"></activity>
+        <activity android:name=".CreditsActivity"></activity>
+        <activity android:name=".FilterData" />
+        <activity android:name=".ShowData" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

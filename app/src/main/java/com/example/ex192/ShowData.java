@@ -5,7 +5,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
@@ -24,6 +27,15 @@ import java.util.ArrayList;
 import static com.example.ex192.FBref.refRoot;
 import static com.example.ex192.MainActivity.checkAlphabetic;
 
+/**
+ * The type show activity.
+ * @author Itey Weintraub <av5350@bs.amalnet.k12.il>
+ * @version	1
+ * @since 28.3.2021
+ * short description:
+ *
+ *      This activity shows the db data and let user to change the vaccines info
+ */
 public class ShowData extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     ListView dataLv;
     ArrayAdapter<String> adp;
@@ -64,8 +76,15 @@ public class ShowData extends AppCompatActivity implements AdapterView.OnItemCli
         });
     }
 
+    /**
+     * Vaccine edit info.
+     *
+     * @param place      the place
+     * @param vaccineNum the vaccine num (first / second)
+     */
     public void vaccineEdit(int place, int vaccineNum)
     {
+        //  if this user can be vaccinated - can to edit his data
         if (infoList.get(place).getFirstVaccine() != null) {
             adb = new AlertDialog.Builder(this);
             adb.setCancelable(false);
@@ -145,7 +164,7 @@ public class ShowData extends AppCompatActivity implements AdapterView.OnItemCli
 
     /**
      * Callback method to be invoked when an item in this AdapterView has
-     * been clicked.
+     * been clicked. - second vaccine edit
      *
      * @param parent   The AdapterView where the click happened.
      * @param view     The view within the AdapterView that was clicked
@@ -161,7 +180,7 @@ public class ShowData extends AppCompatActivity implements AdapterView.OnItemCli
 
     /**
      * Callback method to be invoked when an item in this view has been
-     * clicked and held.
+     * clicked and held. - first vaccine edit
      *
      * @param parent   The AbsListView where the click happened
      * @param view     The view within the AbsListView that was clicked
@@ -174,6 +193,50 @@ public class ShowData extends AppCompatActivity implements AdapterView.OnItemCli
         Toast.makeText(this, "Edit first vaccine...", Toast.LENGTH_SHORT).show();
 
         vaccineEdit(position, 1);
+
+        return true;
+    }
+
+    /**
+     * Create the options menu
+     *
+     * @param menu the menu
+     * @return ture if success
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    /**
+     * Where to go when the menu item was selected
+     *
+     * @param item The menu item that was selected.
+     *
+     * @return boolean Return false to allow normal menu processing to
+     *         proceed, true to consume it here.
+     */
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        // go to edit Vaccines activity if clicked
+        if (id == R.id.editVaccines)
+        {
+            Intent si = new Intent(this, ShowData.class);
+            startActivity(si);
+        }
+        else if (id == R.id.addStudent)
+        {
+            Intent si = new Intent(this, MainActivity.class);
+            startActivity(si);
+        }
+        else if (id == R.id.appCredits)
+        {
+            Intent si = new Intent(this, CreditsActivity.class);
+            startActivity(si);
+        }
 
         return true;
     }
