@@ -98,12 +98,15 @@ public class FilterData extends AppCompatActivity implements AdapterView.OnItemS
 
                     // Add the student info object to array
                     StudentInfo student = data.getValue(StudentInfo.class);
-                    allSchool.add(student.getFirstName() + " " + student.getLastName() + " Stratum: " + student.getStratum() + " Class: " + student.getStudClass());
 
                     // if cant vaccinated
                     if (keyTmp.substring(4, 5).equals("0"))
                     {
                         cantVaccine.add(student.getFirstName() + " " + student.getLastName() + " Stratum: " + student.getStratum() + " Class: " + student.getStudClass());
+                    }
+                    else // else - can be vaccinated
+                    {
+                        allSchool.add(student.getFirstName() + " " + student.getLastName() + " Stratum: " + student.getStratum() + " Class: " + student.getStudClass());
                     }
                 }
 
@@ -198,9 +201,12 @@ public class FilterData extends AppCompatActivity implements AdapterView.OnItemS
                             for (DataSnapshot data : dS.getChildren())
                             {
                                 StudentInfo student = data.getValue(StudentInfo.class);
-                                currStratum.add(student.getFirstName() + " " + student.getLastName() + " Stratum: " + student.getStratum() + " Class: " + student.getStudClass());
 
-                                stratumClasses.add(student);
+                                if (student.getFirstVaccine() != null) // if was vaccinated
+                                {
+                                    currStratum.add(student.getFirstName() + " " + student.getLastName() + " Stratum: " + student.getStratum() + " Class: " + student.getStudClass());
+                                    stratumClasses.add(student);
+                                }
                             }
 
                             if (option == 2) {
