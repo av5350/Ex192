@@ -19,7 +19,7 @@ public class FBref {
     public static FirebaseDatabase FBDB = FirebaseDatabase.getInstance("https://ex192-3cdc5-default-rtdb.firebaseio.com/");
 
     /**
-     * The constant ref to Root.
+     * The constant ref to Root (Students).
      */
-    public static DatabaseReference refRoot = FBDB.getReference();
+    public static DatabaseReference refRoot = FBDB.getReference("Students");
 }
